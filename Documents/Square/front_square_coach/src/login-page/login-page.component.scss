@@ -1,0 +1,55 @@
+
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('/tenis-court.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card {
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.p-inputgroup {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  margin-top: 1rem;
+}
+small {
+  color: #d05555;
+  margin: 4px;
+}
+img {
+  width: 100px;
+  height: 100px;
+}
+h4 {
+  color: #21574A;
+}

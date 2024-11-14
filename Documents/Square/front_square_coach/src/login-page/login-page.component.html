@@ -1,0 +1,38 @@
+<div class="login-container">
+  <div class="card">
+    <img src="square-logo.png" alt="Logo da Empresa" />
+    <h4>Seja bem vindo ao Square Coach!</h4>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Campo de E-mail -->
+      <div class="p-field" [ngClass]="{'ng-invalid': loginForm.controls['username'].invalid && loginForm.controls['username'].touched, 'ng-dirty': loginForm.controls['username'].dirty}">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+          </p-inputGroupAddon>
+          <input pInputText formControlName="username" placeholder="E-mail" />
+        </p-inputGroup>
+        <small *ngIf="loginForm.controls['username'].errors?.['required'] && loginForm.controls['username'].touched">
+          O e-mail é obrigatório
+        </small>
+        <small *ngIf="loginForm.controls['username'].errors?.['email'] && loginForm.controls['username'].touched">
+          O e-mail inserido é inválido
+        </small>
+      </div>
+
+      <!-- Campo de Senha -->
+      <div class="p-field" [ngClass]="{'ng-invalid': loginForm.controls['password'].invalid && loginForm.controls['password'].touched, 'ng-dirty': loginForm.controls['password'].dirty}">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input pInputText type="password" formControlName="password" placeholder="Senha" />
+        </p-inputGroup>
+        <small *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+          A senha é obrigatória
+        </small>
+      </div>
+
+      <button pButton type="submit" label="Entrar" [disabled]="loginForm.invalid"></button>
+    </form>
+  </div>
+</div>

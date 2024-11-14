@@ -1,0 +1,561 @@
+openapi: 3.0.0
+paths:
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      summary: Login de usuário
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+      responses:
+        "200":
+          description: Usuário logado com sucesso.
+        "401":
+          description: Unauthorized
+  /usuarios:
+    post:
+      operationId: UsuariosController_create
+      summary: Cria um novo usuário
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUsuarioDto"
+      responses:
+        "201":
+          description: Usuário criado com sucesso.
+        "400":
+          description: Dados inválidos.
+      tags: &a1
+        - usuarios
+    get:
+      operationId: UsuariosController_findAll
+      summary: Lista todos os usuários
+      parameters: []
+      responses:
+        "200":
+          description: Lista de usuários retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublicUsuarioDto"
+      tags: *a1
+      security:
+        - JWT-auth: []
+  /usuarios/alunos:
+    get:
+      operationId: UsuariosController_findAllAlunos
+      summary: Lista todos os alunos
+      parameters: []
+      responses:
+        "200":
+          description: Lista de alunos retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublicUsuarioDto"
+      tags: *a1
+      security:
+        - JWT-auth: []
+  /usuarios/{id}:
+    get:
+      operationId: UsuariosController_findOne
+      summary: Obtém os detalhes de um usuário pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID do usuário
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Usuário encontrado.
+        "404":
+          description: Usuário não encontrado.
+      tags: *a1
+      security:
+        - JWT-auth: []
+    put:
+      operationId: UsuariosController_update
+      summary: Atualiza os dados de um usuário pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID do usuário
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUsuarioDto"
+      responses:
+        "200":
+          description: Usuário atualizado com sucesso.
+        "404":
+          description: Usuário não encontrado.
+      tags: *a1
+      security:
+        - JWT-auth: []
+    delete:
+      operationId: UsuariosController_remove
+      summary: Remove um usuário pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID do usuário
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Usuário removido com sucesso.
+        "404":
+          description: Usuário não encontrado.
+      tags: *a1
+      security:
+        - JWT-auth: []
+  /aulas-disponiveis:
+    post:
+      operationId: AulasDisponiveisController_create
+      summary: Cria uma nova aula disponível
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAulaDisponivelDto"
+      responses:
+        "201":
+          description: Aula criada com sucesso.
+        "400":
+          description: Dados inválidos.
+      tags: &a2
+        - aulas-disponiveis
+      security:
+        - JWT-auth: []
+    get:
+      operationId: AulasDisponiveisController_findAll
+      summary: Lista todas as aulas disponíveis
+      parameters: []
+      responses:
+        "200":
+          description: Lista de alunos retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AulaDisponivelDto"
+      tags: *a2
+      security:
+        - JWT-auth: []
+  /aulas-disponiveis/professor/{id}:
+    get:
+      operationId: AulasDisponiveisController_findAllByProfessorId
+      summary: Lista todas as aulas vinculadas a um professor específico
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID do professor
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Lista de aulas retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AulaDisponivelDto"
+        "404":
+          description: Nenhuma aula encontrada para o professor com o ID fornecido.
+      tags: *a2
+      security:
+        - JWT-auth: []
+  /aulas-disponiveis/{id}:
+    get:
+      operationId: AulasDisponiveisController_findOne
+      summary: Obtém os detalhes de uma aula pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID da aula
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Aula encontrada.
+        "404":
+          description: Aula não encontrada.
+      tags: *a2
+      security:
+        - JWT-auth: []
+    put:
+      operationId: AulasDisponiveisController_update
+      summary: Atualiza os dados de uma aula pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID da aula
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAulaDisponivelDto"
+      responses:
+        "200":
+          description: Aula atualizada com sucesso.
+        "404":
+          description: Aula não encontrada.
+      tags: *a2
+      security:
+        - JWT-auth: []
+    delete:
+      operationId: AulasDisponiveisController_remove
+      summary: Remove uma aula pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID da aula
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Aula removida com sucesso.
+        "404":
+          description: Aula não encontrada.
+      tags: *a2
+      security:
+        - JWT-auth: []
+  /agendamentos/vincularAluno:
+    post:
+      operationId: AgendamentosController_create
+      summary: Cria um novo agendamento
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAgendamentoDto"
+      responses:
+        "201":
+          description: Agendamento criado com sucesso.
+        "403":
+          description: Acesso negado. Somente professores podem criar agendamentos.
+      tags: &a3
+        - agendamentos
+      security:
+        - JWT-auth: []
+  /agendamentos/aula/{idAula}/detalhes:
+    get:
+      operationId: AgendamentosController_findAulaWithAlunos
+      summary: Obtém os detalhes da aula e todos os alunos vinculados a uma aula pelo
+        ID da aula
+      parameters:
+        - name: idAula
+          required: true
+          in: path
+          description: ID da aula
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Detalhes da aula e lista de alunos retornados com sucesso.
+        "404":
+          description: Nenhuma aula ou aluno encontrado para o ID fornecido.
+      tags: *a3
+      security:
+        - JWT-auth: []
+  /agendamentos/todos:
+    get:
+      operationId: AgendamentosController_findAll
+      summary: Obtém lista de todos os agendamentos
+      parameters: []
+      responses:
+        "200":
+          description: Lista de todos os agendamentos retornada com sucesso.
+      tags: *a3
+      security:
+        - JWT-auth: []
+  /agendamentos:
+    get:
+      operationId: AgendamentosController_findAulasComAlunos
+      summary: Lista todos os agendamentos
+      parameters: []
+      responses:
+        "200":
+          description: Lista de agendamentos retornada com sucesso.
+      tags: *a3
+      security:
+        - JWT-auth: []
+  /agendamentos/professor:
+    get:
+      operationId: AgendamentosController_findAulasDoProfessor
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags: *a3
+      security:
+        - JWT-auth: []
+  /agendamentos/{id}:
+    get:
+      operationId: AgendamentosController_findOne
+      summary: Obtém os detalhes de um agendamento pelo ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ID do agendamento
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Agendamento encontrado.
+        "404":
+          description: Agendamento não encontrado.
+      tags: *a3
+      security:
+        - JWT-auth: []
+  /agendamentos/aula/{idAula}/aluno/{idAluno}:
+    delete:
+      operationId: AgendamentosController_removeAlunoFromAula
+      summary: Remove um aluno específico de uma aula pelo ID da aula e ID do aluno
+      parameters:
+        - name: idAula
+          required: true
+          in: path
+          description: ID da Aula
+          schema:
+            type: number
+        - name: idAluno
+          required: true
+          in: path
+          description: ID do Aluno
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Aluno removido da aula com sucesso.
+        "404":
+          description: Nenhum agendamento encontrado para o aluno e a aula fornecidos.
+      tags: *a3
+      security:
+        - JWT-auth: []
+info:
+  title: API de Agendamentos
+  description: API para gestão de agendamentos com usuários, professores e alunos.
+  version: "1.0"
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    JWT-auth:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    LoginDto:
+      type: object
+      properties:
+        username:
+          type: string
+          description: O nome de usuário do usuário
+          example: usuario123
+        password:
+          type: string
+          description: A senha do usuário
+          example: suaSenhaSecreta
+      required:
+        - username
+        - password
+    CreateUsuarioDto:
+      type: object
+      properties:
+        nomeCompleto:
+          type: string
+          description: Nome completo do usuário
+        dataNascimento:
+          format: date-time
+          type: string
+          description: Data de nascimento do usuário
+          example: 1990-01-01
+        tipoUsuario:
+          type: string
+          description: Tipo de usuário, pode ser aluno ou professor
+          enum:
+            - aluno
+            - professor
+        username:
+          type: string
+          description: Nome de usuário (username) único
+        senha:
+          type: string
+          description: Senha do usuário
+      required:
+        - nomeCompleto
+        - dataNascimento
+        - tipoUsuario
+        - username
+        - senha
+    PublicUsuarioDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID do usuário
+        nomeCompleto:
+          type: string
+          description: Nome completo do usuário
+        dataNascimento:
+          type: string
+          description: Data de nascimento do usuário
+          example: 1990-01-01
+        tipoUsuario:
+          type: string
+          description: Tipo de usuário, pode ser aluno ou professor
+          enum:
+            - aluno
+            - professor
+      required:
+        - id
+        - nomeCompleto
+        - dataNascimento
+        - tipoUsuario
+    UpdateUsuarioDto:
+      type: object
+      properties:
+        nomeCompleto:
+          type: string
+          description: Nome completo do usuário
+        dataNascimento:
+          format: date-time
+          type: string
+          description: Data de nascimento do usuário
+          example: 1990-01-01
+        tipoUsuario:
+          type: string
+          description: Tipo de usuário, pode ser aluno ou professor
+          enum:
+            - aluno
+            - professor
+        username:
+          type: string
+          description: Nome de usuário (username) único
+        senha:
+          type: string
+          description: Senha do usuário
+    CreateAulaDisponivelDto:
+      type: object
+      properties:
+        horario:
+          format: date-time
+          type: string
+          description: Horário da aula
+          example: 2024-01-01T10:00:00Z
+        idProfessor:
+          type: number
+          description: ID do professor responsável
+        modalidade:
+          type: string
+          description: Modalidade da aula
+        status:
+          type: string
+          description: status
+        numeroMaximoAlunos:
+          type: number
+          description: Número máximo de alunos permitidos na aula
+          example: 20
+      required:
+        - horario
+        - idProfessor
+        - modalidade
+        - numeroMaximoAlunos
+    AulaDisponivelDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID da aula disponível
+        horario:
+          format: date-time
+          type: string
+          description: Horário da aula
+        modalidade:
+          type: string
+          description: Modalidade da aula
+        status:
+          type: string
+          description: Status
+        numeroMaximoAlunos:
+          type: number
+          description: Número máximo de alunos
+        professor:
+          description: Dados do professor responsável pela aula
+          allOf:
+            - $ref: "#/components/schemas/PublicUsuarioDto"
+      required:
+        - id
+        - horario
+        - modalidade
+        - status
+        - numeroMaximoAlunos
+        - professor
+    UpdateAulaDisponivelDto:
+      type: object
+      properties:
+        horario:
+          format: date-time
+          type: string
+          description: Horário da aula
+          example: 2024-01-01T10:00:00Z
+        idProfessor:
+          type: number
+          description: ID do professor responsável
+        modalidade:
+          type: string
+          description: Modalidade da aula
+        status:
+          type: string
+          description: status
+        numeroMaximoAlunos:
+          type: number
+          description: Número máximo de alunos permitidos na aula
+          example: 20
+    CreateAgendamentoDto:
+      type: object
+      properties:
+        idAluno:
+          type: number
+          description: ID do aluno
+        idAula:
+          type: number
+          description: ID da aula
+      required:
+        - idAluno
+        - idAula
